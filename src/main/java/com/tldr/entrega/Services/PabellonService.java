@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class PabellonService {
     
     @Autowired
-    @Qualifier("CamaRepository")
+    @Qualifier("PabellonRepository")
     private PabellonRepository PabellonRepo;
     
     // CREATE
