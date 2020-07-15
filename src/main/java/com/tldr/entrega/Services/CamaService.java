@@ -20,7 +20,21 @@ public class CamaService {
       CamaRepo.save(objeto);
       return true;
     } catch (Exception e) {
-      System.out.println(e);
+      return false;
+    }
+  }
+
+  // UPDATE
+  public boolean update(Cama objeto) {
+    try {
+      Cama Aux = CamaRepo.findByCamaid( objeto.getCamaid() );
+      if( objeto.getOcupado() )
+        Aux.setOcupado(false);
+      else
+        Aux.setOcupado(true);
+      CamaRepo.save(Aux);
+      return true;
+    } catch (Exception e) {
       return false;
     }
   }
