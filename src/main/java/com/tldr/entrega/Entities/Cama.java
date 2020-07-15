@@ -4,12 +4,15 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "cama")
@@ -27,9 +30,9 @@ public class Cama implements Serializable{
     @Column(name = "capacidad")
     private float capacidad;
     
-    @ManyToOne
-    @JoinColumn(name="pabellonid", nullable=false)
-    private Pabellon pabellon;
+    @Column(name = "idpabellon")
+    private Long idpabellon;
+
 
 
     public Long getCamaid() {
@@ -60,23 +63,20 @@ public class Cama implements Serializable{
         this.capacidad = capacidad;
     }
 
-    public Pabellon getPabellon() {
-        return this.pabellon;
+    public Long getIdpabellon() {
+        return this.idpabellon;
     }
 
-    public void setPabellon(Pabellon pabellon) {
-        this.pabellon = pabellon;
+    public void setIdpabellon(Long idpabellon) {
+        this.idpabellon = idpabellon;
     }
 
-    public Cama(Long camaid, boolean ocupado, float capacidad, Pabellon pabellon) {
+    public Cama(Long camaid, boolean ocupado, float capacidad, Long idpabellon) {
         this.camaid = camaid;
         this.ocupado = ocupado;
         this.capacidad = capacidad;
-        this.pabellon = pabellon;
+        this.idpabellon = idpabellon;
     }
 
-    public Cama(){
-        
-    }
-
+    public Cama(){}
 }

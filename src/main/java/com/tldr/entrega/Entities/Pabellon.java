@@ -1,14 +1,12 @@
 package com.tldr.entrega.Entities;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,9 +21,6 @@ public class Pabellon implements Serializable{
 
     @Column(name = "capacidad")
     private int capacidad;
-
-    @OneToMany(mappedBy="pabellon")
-    private Set<Cama> camas;
 
     public Long getPabellonid() {
         return this.pabellonid;
