@@ -23,8 +23,8 @@ public class Registro implements Serializable{
     @Column(name = "idpaciente")
     private Long idpaciente;
 
-    @Column(name = "idcama")
-    private Long idcama;
+    @Column(name = "idpabellon")
+    private Long idpabellon;
 
     @Column(name = "fechaentrada")
     private Date fechaentrada;
@@ -48,12 +48,12 @@ public class Registro implements Serializable{
         this.idpaciente = idpaciente;
     }
 
-    public Long getIdcama() {
-        return this.idcama;
+    public Long getIdpabellon() {
+        return this.idpabellon;
     }
 
-    public void setIdcama(Long idcama) {
-        this.idcama = idcama;
+    public void setIdpabellon(Long idcama) {
+        this.idpabellon = idcama;
     }
 
     public Date getFechaentrada() {
@@ -72,10 +72,10 @@ public class Registro implements Serializable{
         this.fechasalida = fechasalida;
     }
 
-    public Registro(Long registroid, Long idpaciente, Long idcama, Date fechaentrada, Date fechasalida) {
+    public Registro(Long registroid, Long idpaciente, Long idpabellon, Date fechaentrada, Date fechasalida) {
         this.registroid = registroid;
         this.idpaciente = idpaciente;
-        this.idcama = idcama;
+        this.idpabellon = idpabellon;
         this.fechaentrada = fechaentrada;
         this.fechasalida = fechasalida;
     }
