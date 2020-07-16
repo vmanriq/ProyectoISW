@@ -32,7 +32,7 @@ public class RegistroService {
     public boolean update(Registro objeto) {
         try {
             Date fechasalida = new Date();
-            Registro Aux = RegistroRepo.findByRegistroid( objeto.getIdcama() );
+            Registro Aux = RegistroRepo.findByRegistroid( objeto.getRegistroid() );
             Aux.setFechasalida(fechasalida);
             RegistroRepo.save(Aux);
             return true;
