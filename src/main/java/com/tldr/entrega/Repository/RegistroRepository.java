@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository("RegistroRepository")
 public interface RegistroRepository extends JpaRepository<Registro, Long>{
+
+    public abstract Registro findByRegistroid(Long idcama);
     
 }
