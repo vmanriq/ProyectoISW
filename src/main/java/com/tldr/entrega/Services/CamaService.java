@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("CamaService")
 public class CamaService {
 
@@ -42,5 +44,16 @@ public class CamaService {
   // READ
   public Cama readById(Long id) {
     return CamaRepo.findByCamaid(id);
+  }
+  
+  //READ BY "ESTADO"
+  public List<Cama> getCamas(boolean estado){
+	  return CamaRepo.findByOcupado(estado);
+  }
+  
+  //READ BY "ESTADO"
+  public List<Cama> getCamasByPab(boolean estado, Long idpabellon){
+	  return CamaRepo.findByOcupadoAndIdpabellon(estado, idpabellon);
+  
   }
 }
