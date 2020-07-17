@@ -5,6 +5,7 @@ import com.tldr.entrega.Entities.Pabellon;
 import com.tldr.entrega.Services.CamaService;
 import com.tldr.entrega.Services.PabellonService;
 
+import com.tldr.entrega.Services.RegistroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,8 @@ public class APIcontroller {
     @Autowired
 	@Qualifier("CamaService")
     private CamaService CamaServ;
+
+
 
     @PostMapping("/addPabellon")
     public ResponseEntity<Object> savePabellon(@RequestBody Pabellon objeto){
@@ -95,8 +98,21 @@ public class APIcontroller {
 		}
 		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
 	}
-    
-    
+
+	@PostMapping("/AsignarCamaPaciente")
+	public ResponseEntity<Object> asignarCama(@RequestParam(value="idCama") Long idCama, @RequestParam(value="idPaciente") Long idPaciente){
+		Cama cama = CamaServ.readById(idCama);
+		if(cama == null) {
+			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+		}
+		//aca deberiamos llamar a la id del otro paciente, pero es la api de otro grupo
+		if(cama.getOcupado()){
+			return new ResponseEntity<>(cama,HttpStatus.CONFLICT);
+		}
+		CamaServ.update(cama);
+		return new ResponseEntity<>(cama,HttpStatus.OK);
+	}
+
     @GetMapping
     public String hello(){
         return "Hello World";
