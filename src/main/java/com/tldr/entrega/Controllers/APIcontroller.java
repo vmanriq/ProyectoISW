@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1")
 public class APIcontroller {
@@ -69,6 +71,31 @@ public class APIcontroller {
 		}
 		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
 	}
+    
+    
+    @GetMapping("/CamasEstado")
+	public ResponseEntity<Object> getCamasByEstado( 
+			@RequestParam(required = true) boolean estado
+			){
+		List<Cama> objeto = CamaServ.getCamas(estado);
+		if(objeto == null) {
+			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
+	}
+    
+    @GetMapping("/CamasEstadoPabellon")
+	public ResponseEntity<Object> getCamasByEstadoPabellon( 
+			@RequestParam(required = true) boolean estado, Long idpabellon
+			
+			){
+		List<Cama> objeto = CamaServ.getCamasByPab(estado, idpabellon);
+		if(objeto == null) {
+			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
+	}
+    
     
     @GetMapping
     public String hello(){
