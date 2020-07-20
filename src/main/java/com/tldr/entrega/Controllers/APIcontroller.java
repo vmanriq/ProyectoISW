@@ -2,6 +2,7 @@ package com.tldr.entrega.Controllers;
 
 import com.tldr.entrega.Entities.Cama;
 import com.tldr.entrega.Entities.Pabellon;
+import com.tldr.entrega.Entities.Registro;
 import com.tldr.entrega.Services.CamaService;
 import com.tldr.entrega.Services.PabellonService;
 
@@ -10,12 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,6 +26,10 @@ public class APIcontroller {
     @Autowired
 	@Qualifier("CamaService")
     private CamaService CamaServ;
+
+	@Autowired
+	@Qualifier("RegistroService")
+	private RegistroService RegistroServ;
 
 
 
@@ -93,15 +93,16 @@ public class APIcontroller {
 			
 			){
 		List<Cama> objeto = CamaServ.getCamasByPab(estado, idpabellon);
-		if(objeto == null) {
+		if(objeto == null || objeto.size() == 0) {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
 	}
 
-	@PostMapping("/AsignarCamaPaciente")
+	@PutMapping("/AsignarCamaPaciente")
 	public ResponseEntity<Object> asignarCama(@RequestParam(value="idCama") Long idCama, @RequestParam(value="idPaciente") Long idPaciente){
 		Cama cama = CamaServ.readById(idCama);
+		Registro reg = new Registro();
 		if(cama == null) {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
@@ -110,6 +111,12 @@ public class APIcontroller {
 			return new ResponseEntity<>(cama,HttpStatus.CONFLICT);
 		}
 		CamaServ.update(cama);
+
+		reg.setComentario("gj");
+		reg.setIdpaciente(idPaciente);
+		reg.setIdpabellon(cama.getIdpabellon());
+		RegistroServ.create(reg);
+
 		return new ResponseEntity<>(cama,HttpStatus.OK);
 	}
 

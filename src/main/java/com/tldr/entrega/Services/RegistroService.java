@@ -19,8 +19,8 @@ public class RegistroService {
     // CREATE
     public boolean create(Registro objeto) {
         try {
-            Date fechaentrada = new Date();
-            objeto.setFechaentrada(fechaentrada);
+            Date fecha = new Date();
+            objeto.setFecha(fecha);
             RegistroRepo.save(objeto);
             return true;
         } catch (Exception e) {
@@ -31,9 +31,9 @@ public class RegistroService {
     // UPDATE
     public boolean update(Registro objeto) {
         try {
-            Date fechasalida = new Date();
+            Date fecha = new Date();
             Registro Aux = RegistroRepo.findByRegistroid( objeto.getRegistroid() );
-            Aux.setFechasalida(fechasalida);
+            Aux.setFecha(fecha);
             RegistroRepo.save(Aux);
             return true;
         } catch (Exception e) {

@@ -26,14 +26,16 @@ public class Registro implements Serializable{
     @Column(name = "idpabellon")
     private Long idpabellon;
 
-    @Column(name = "fechaentrada")
-    private Date fechaentrada;
+    @Column(name = "fecha")
+    private Date fecha;
 
-    @Column(name = "fechasalida")
-    private Date fechasalida;
+
+
+    @Column(name = "comentario")
+    private String comentario;
 
     public Long getRegistroid() {
-        return this.registroid;
+        return registroid;
     }
 
     public void setRegistroid(Long registroid) {
@@ -41,7 +43,7 @@ public class Registro implements Serializable{
     }
 
     public Long getIdpaciente() {
-        return this.idpaciente;
+        return idpaciente;
     }
 
     public void setIdpaciente(Long idpaciente) {
@@ -49,35 +51,35 @@ public class Registro implements Serializable{
     }
 
     public Long getIdpabellon() {
-        return this.idpabellon;
+        return idpabellon;
     }
 
-    public void setIdpabellon(Long idcama) {
-        this.idpabellon = idcama;
+    public void setIdpabellon(Long idpabellon) {
+        this.idpabellon = idpabellon;
     }
 
-    public Date getFechaentrada() {
-        return this.fechaentrada;
+    public Date getFecha() {
+        return fecha;
     }
 
-    public void setFechaentrada(Date fechaentrada) {
-        this.fechaentrada = fechaentrada;
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 
-    public Date getFechasalida() {
-        return this.fechasalida;
+    public String getComentario() {
+        return comentario;
     }
 
-    public void setFechasalida(Date fechasalida) {
-        this.fechasalida = fechasalida;
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 
-    public Registro(Long registroid, Long idpaciente, Long idpabellon, Date fechaentrada, Date fechasalida) {
+    public Registro(Long registroid, Long idpaciente, Long idpabellon, Date fecha, String comentario) {
         this.registroid = registroid;
         this.idpaciente = idpaciente;
         this.idpabellon = idpabellon;
-        this.fechaentrada = fechaentrada;
-        this.fechasalida = fechasalida;
+        this.fecha = fecha;
+        this.comentario = comentario;
     }
 
     public Registro() {
