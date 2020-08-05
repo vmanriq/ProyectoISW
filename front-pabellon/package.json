@@ -2,7 +2,7 @@
   "name": "front-pabellon",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:8888",
+  "proxy": "http://localhost:8888",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -16,6 +16,8 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^1.1.1",
     "shards-react": "^1.0.3"
   },
   "scripts": {

@@ -62,6 +62,13 @@ public class APIcontroller {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
+	}
+	
+	@GetMapping("/PabellonIds")
+	public ResponseEntity<Object> getAllPabellonIds( 
+			){
+		List<Long> lista = PabellonServ.readAllIds();
+		return new ResponseEntity<Object>(lista, HttpStatus.OK);
     }
     
     @GetMapping("/Cama")
@@ -93,9 +100,9 @@ public class APIcontroller {
 			
 			){
 		List<Cama> objeto = CamaServ.getCamasByPab(estado, idpabellon);
-		if(objeto == null || objeto.size() == 0) {
-			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
-		}
+		//if(objeto == null || objeto.size() == 0) {
+		//	return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+		//}
 		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
 	}
 
