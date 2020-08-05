@@ -57,6 +57,10 @@ public class CamaService {
   
   }
 
+  public List<Cama> getAllCamas(){
+    return CamaRepo.findAll();
+  }
+
   public List<Cama> getAllCamasByPabellon(Long idpabellon){
     return CamaRepo.findByIdpabellon(idpabellon);
   }

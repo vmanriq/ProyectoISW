@@ -96,12 +96,15 @@ public class APIcontroller {
     
     @GetMapping("/CamasEstadoPabellon")
 	public ResponseEntity<Object> getCamasByEstadoPabellon( 
-			@RequestParam(required = false) final String estado, 
-			@RequestParam(required = true) final Long idpabellon
+			@RequestParam(required = false, value = "estado") String estado, 
+			@RequestParam(required = false, value = "idpabellon", defaultValue="0") Long idpabellon
 			){
 		List<Cama> objeto;
 		if( estado == null){
-			objeto = CamaServ.getAllCamasByPabellon(idpabellon);
+			if(idpabellon==0)
+				objeto = CamaServ.getAllCamas();
+			else
+				objeto = CamaServ.getAllCamasByPabellon(idpabellon);
 		}else{
 			boolean b = Boolean.parseBoolean(estado);
 			objeto = CamaServ.getCamasByPab(b, idpabellon);
