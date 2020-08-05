@@ -56,4 +56,8 @@ public class CamaService {
 	  return CamaRepo.findByOcupadoAndIdpabellon(estado, idpabellon);
   
   }
+
+  public List<Cama> getAllCamasByPabellon(Long idpabellon){
+    return CamaRepo.findByIdpabellon(idpabellon);
+  }
 }

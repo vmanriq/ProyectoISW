@@ -7,7 +7,7 @@ class Tables extends Component {
 		super(props);
 		this.state = {
 			camas: [],
-			estado: false,
+			estado: null,
 			pabellones: [],
 			pabellonid: 1 
 		}
@@ -113,6 +113,10 @@ class Tables extends Component {
 												Ocupada
 	                        </button>
 											<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+											<a class="dropdown-item" onClick={() => this.setState({
+													...this.state,
+													estado: null,
+												})}>--- </a>
 												<a class="dropdown-item" onClick={() => this.setState({
 													...this.state,
 													estado: true,
