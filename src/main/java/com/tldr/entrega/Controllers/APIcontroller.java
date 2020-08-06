@@ -116,6 +116,17 @@ public class APIcontroller {
 		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
 	}
 
+	@PutMapping("/UpdateCamaState"){
+		public ResponseEntity<Object> updateCama(@RequestParam(value="idCama") final Long idCama){
+			final Cama cama = CamaServ.readById(idCama);
+			if(cama == null) {
+				return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+			}
+			CamaServ.update(cama);
+			return new ResponseEntity<>(cama,HttpStatus.OK);
+		}
+	}
+
 	@PutMapping("/AsignarCamaPaciente")
 	public ResponseEntity<Object> asignarCama(@RequestParam(value="idCama") final Long idCama, @RequestParam(value="idPaciente") final Long idPaciente){
 		final Cama cama = CamaServ.readById(idCama);
