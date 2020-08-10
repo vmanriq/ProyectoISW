@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/v1")
 public class APIcontroller {
@@ -34,7 +35,7 @@ public class APIcontroller {
 
 
     @PostMapping("/addPabellon")
-    public ResponseEntity<Object> savePabellon(@RequestBody Pabellon objeto){
+    public ResponseEntity<Object> savePabellon(@RequestBody final Pabellon objeto){
 		if(PabellonServ.create(objeto) == false){
             return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
@@ -42,8 +43,8 @@ public class APIcontroller {
     }
 
     @PostMapping("/addCama")
-    public ResponseEntity<Object> saveCama(@RequestBody Cama objeto){
-        Pabellon aux = PabellonServ.readById(objeto.getIdpabellon());
+    public ResponseEntity<Object> saveCama(@RequestBody final Cama objeto){
+        final Pabellon aux = PabellonServ.readById(objeto.getIdpabellon());
         if(aux == null) {
 			return new ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
 		}
@@ -55,20 +56,27 @@ public class APIcontroller {
 
     @GetMapping("/Pabellon")
 	public ResponseEntity<Object> getPabellonById( 
-			@RequestParam(required = true) long id
+			@RequestParam(required = true) final long id
 			){
-		Pabellon objeto = PabellonServ.readById(id);
+		final Pabellon objeto = PabellonServ.readById(id);
 		if(objeto == null) {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
+	}
+	
+	@GetMapping("/PabellonIds")
+	public ResponseEntity<Object> getAllPabellonIds( 
+			){
+		final List<Long> lista = PabellonServ.readAllIds();
+		return new ResponseEntity<Object>(lista, HttpStatus.OK);
     }
     
     @GetMapping("/Cama")
 	public ResponseEntity<Object> getCamaById( 
-			@RequestParam(required = true) long id
+			@RequestParam(required = true) final long id
 			){
-		Cama objeto = CamaServ.readById(id);
+		final Cama objeto = CamaServ.readById(id);
 		if(objeto == null) {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
@@ -78,9 +86,9 @@ public class APIcontroller {
     
     @GetMapping("/CamasEstado")
 	public ResponseEntity<Object> getCamasByEstado( 
-			@RequestParam(required = true) boolean estado
+			@RequestParam(required = true) final boolean estado
 			){
-		List<Cama> objeto = CamaServ.getCamas(estado);
+		final List<Cama> objeto = CamaServ.getCamas(estado);
 		if(objeto == null) {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
@@ -89,20 +97,41 @@ public class APIcontroller {
     
     @GetMapping("/CamasEstadoPabellon")
 	public ResponseEntity<Object> getCamasByEstadoPabellon( 
-			@RequestParam(required = true) boolean estado, Long idpabellon
-			
+			@RequestParam(required = false, value = "estado") String estado, 
+			@RequestParam(required = false, value = "idpabellon", defaultValue="0") Long idpabellon
 			){
-		List<Cama> objeto = CamaServ.getCamasByPab(estado, idpabellon);
-		if(objeto == null || objeto.size() == 0) {
+		List<Cama> objeto;
+		if( estado == null){
+			if(idpabellon==0)
+				objeto = CamaServ.getAllCamas();
+			else
+				objeto = CamaServ.getAllCamasByPabellon(idpabellon);
+		}else{
+			boolean b = Boolean.parseBoolean(estado);
+			objeto = CamaServ.getCamasByPab(b, idpabellon);
+		}
+		
+		if(objeto == null) {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Object>(objeto, HttpStatus.OK);
 	}
 
+	@PutMapping("/UpdateCamaState")
+	public ResponseEntity<Object> updateCama(@RequestParam(value="idCama") final Long idCama){
+		final Cama cama = CamaServ.readById(idCama);
+		if(cama == null) {
+			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+		}
+		CamaServ.update(cama);
+		return new ResponseEntity<>(cama,HttpStatus.OK);
+    }
+
+
 	@PutMapping("/AsignarCamaPaciente")
-	public ResponseEntity<Object> asignarCama(@RequestParam(value="idCama") Long idCama, @RequestParam(value="idPaciente") Long idPaciente){
-		Cama cama = CamaServ.readById(idCama);
-		Registro reg = new Registro();
+	public ResponseEntity<Object> asignarCama(@RequestParam(value="idCama") final Long idCama, @RequestParam(value="idPaciente") final Long idPaciente){
+		final Cama cama = CamaServ.readById(idCama);
+		final Registro reg = new Registro();
 		if(cama == null) {
 			return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
 		}

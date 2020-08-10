@@ -14,5 +14,7 @@ public interface CamaRepository extends JpaRepository<Cama, Long>{
 
     public abstract List<Cama> findByOcupado(boolean estado);
 
+    public abstract List<Cama> findByIdpabellon(Long idpabellon);
+
     public abstract List<Cama> findByOcupadoAndIdpabellon(boolean estado, Long idpabellon);
 }
